@@ -21,10 +21,6 @@
             text-shadow: 0 0 8px #ff0000, 0 0 12px #990000;
             color: #ffcccc;
         }
-        .red-border {
-            border: 1px solid #b30000;
-            box-shadow: 0 0 10px #ff000080;
-        }
         table {
             border-collapse: collapse;
             width: 100%;
@@ -128,16 +124,28 @@
             border-bottom: 1px solid #8b0000;
             letter-spacing: 2px;
         }
-        /* Улучшенные подписи полей — теперь ярче и заметнее */
+        /* Подписи полей — уменьшенное свечение и горизонтальное расположение */
+        .input-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
         .input-label {
-            display: block;
-            font-size: 0.875rem;
+            width: 140px;          /* фиксированная ширина для всех подписей */
+            font-size: 0.9rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            margin-bottom: 0.25rem;
-            color: #ffb3b3;  /* более светлый оттенок */
-            text-shadow: 0 0 8px #ff4d4d, 0 0 12px #ff1a1a, 0 0 16px #b30000;
+            color: #ffb3b3;
+            text-shadow: 0 0 4px #ff4d4d, 0 0 6px #b30000; /* уменьшенное свечение */
+        }
+        .input-field {
+            flex: 1;                /* поле занимает оставшееся пространство */
+            min-width: 0;           /* для flex */
+        }
+        .input-field input,
+        .input-field select {
+            width: 100%;
         }
     </style>
 </head>
@@ -156,26 +164,38 @@
                 <!-- Левая колонка: форма ввода -->
                 <div class="metal-panel p-6 rounded-lg">
                     <h2 class="section-title text-2xl font-bold mb-4 pb-2">:: ДАННЫЕ ЮНИТА ::</h2>
-                    <div class="space-y-4">
-                        <div>
-                            <label class="input-label">ID (серийный номер)</label>
-                            <input type="number" id="member-id" class="w-full px-4 py-2 rounded-md transition" placeholder="например 101">
+                    <div class="space-y-1"> <!-- небольшой отступ между рядами -->
+                        <!-- ID -->
+                        <div class="input-row">
+                            <span class="input-label">ID (серийный номер)</span>
+                            <div class="input-field">
+                                <input type="number" id="member-id" class="w-full px-4 py-2 rounded-md transition" placeholder="например 101">
+                            </div>
                         </div>
-                        <div>
-                            <label class="input-label">Имя (позывной)</label>
-                            <input type="text" id="member-name" class="w-full px-4 py-2 rounded-md transition" placeholder="T-800">
+                        <!-- Имя -->
+                        <div class="input-row">
+                            <span class="input-label">Имя (позывной)</span>
+                            <div class="input-field">
+                                <input type="text" id="member-name" class="w-full px-4 py-2 rounded-md transition" placeholder="T-800">
+                            </div>
                         </div>
-                        <div>
-                            <label class="input-label">Возраст (циклов)</label>
-                            <input type="number" id="member-age" class="w-full px-4 py-2 rounded-md transition" placeholder="35">
+                        <!-- Возраст -->
+                        <div class="input-row">
+                            <span class="input-label">Возраст (циклов)</span>
+                            <div class="input-field">
+                                <input type="number" id="member-age" class="w-full px-4 py-2 rounded-md transition" placeholder="35">
+                            </div>
                         </div>
-                        <div>
-                            <label class="input-label">Тип абонемента</label>
-                            <select id="member-membership" class="w-full px-4 py-2 rounded-md transition">
-                                <option value="Monthly">Monthly (стандарт)</option>
-                                <option value="Quarterly">Quarterly (тактический)</option>
-                                <option value="Yearly">Yearly (стратегический)</option>
-                            </select>
+                        <!-- Тип абонемента -->
+                        <div class="input-row">
+                            <span class="input-label">Тип абонемента</span>
+                            <div class="input-field">
+                                <select id="member-membership" class="w-full px-4 py-2 rounded-md transition">
+                                    <option value="Monthly">Monthly (стандарт)</option>
+                                    <option value="Quarterly">Quarterly (тактический)</option>
+                                    <option value="Yearly">Yearly (стратегический)</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
 
