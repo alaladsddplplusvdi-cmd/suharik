@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Сухарик • Терминатор</title>
-    <!-- Шрифт с терминальным характером -->
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Базовые цвета как в фильме */
         body {
             font-family: 'Share Tech Mono', monospace;
             background: #0a0a0a;
@@ -43,7 +41,7 @@
         td {
             border: 1px solid #330000;
             padding: 8px;
-            color: #ffb3b3;  /* светлый красноватый */
+            color: #ffb3b3;
             background: rgba(0,0,0,0.6);
         }
         tr:nth-child(even) td {
@@ -56,12 +54,12 @@
         input, select {
             background: #111 !important;
             border: 1px solid #a00 !important;
-            color: #ffcccc !important;  /* светлый текст */
+            color: #ffcccc !important;
             font-family: 'Share Tech Mono', monospace;
         }
         input::placeholder {
-            color: #aa5555;  /* placeholder чуть темнее, но видимый */
-            opacity: 0.8;
+            color: #aa5555;
+            opacity: 0.9;
         }
         input:focus, select:focus {
             ring-color: #f00 !important;
@@ -112,7 +110,6 @@
             height: 2px;
             background: linear-gradient(90deg, transparent, #f00, #f00, transparent);
         }
-        /* Улучшенная читаемость фонового текста */
         .footer-text {
             color: #ff8888;
             text-shadow: 0 0 5px #f00;
@@ -131,13 +128,24 @@
             border-bottom: 1px solid #8b0000;
             letter-spacing: 2px;
         }
+        /* Улучшенные подписи полей */
+        .input-label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+            color: #ff8a8a;
+            text-shadow: 0 0 5px #ff4d4d, 0 0 10px #b30000;
+        }
     </style>
 </head>
 <body class="min-h-screen p-4 flex items-center justify-center">
     <div class="max-w-7xl w-full mx-auto metal-panel rounded-xl overflow-hidden">
-        <!-- Шапка в стиле Терминатора -->
+        <!-- Шапка -->
         <div class="header-metal p-6 text-center relative">
-            <h1 class="text-5xl font-bold red-glow glitch" style="font-family: 'Share Tech Mono', monospace;">⚡ СУХАРИК ⚡</h1>
+            <h1 class="text-5xl font-bold red-glow glitch">⚡ СУХАРИК ⚡</h1>
             <p class="subheader mt-2 tracking-widest text-lg">[ ФИТНЕС-КЛУБ БУДУЩЕГО ]</p>
             <p class="cyber-year text-xs mt-1">CYBERDYNE SYSTEMS © 2029</p>
         </div>
@@ -150,19 +158,19 @@
                     <h2 class="section-title text-2xl font-bold mb-4 pb-2">:: ДАННЫЕ ЮНИТА ::</h2>
                     <div class="space-y-4">
                         <div>
-                            <label class="block text-sm font-bold text-red-300 mb-1 uppercase tracking-wider">ID (серийный номер)</label>
+                            <label class="input-label">ID (серийный номер)</label>
                             <input type="number" id="member-id" class="w-full px-4 py-2 rounded-md transition" placeholder="например 101">
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-red-300 mb-1 uppercase tracking-wider">Имя (позывной)</label>
+                            <label class="input-label">Имя (позывной)</label>
                             <input type="text" id="member-name" class="w-full px-4 py-2 rounded-md transition" placeholder="T-800">
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-red-300 mb-1 uppercase tracking-wider">Возраст (циклов)</label>
+                            <label class="input-label">Возраст (циклов)</label>
                             <input type="number" id="member-age" class="w-full px-4 py-2 rounded-md transition" placeholder="35">
                         </div>
                         <div>
-                            <label class="block text-sm font-bold text-red-300 mb-1 uppercase tracking-wider">Тип абонемента</label>
+                            <label class="input-label">Тип абонемента</label>
                             <select id="member-membership" class="w-full px-4 py-2 rounded-md transition">
                                 <option value="Monthly">Monthly (стандарт)</option>
                                 <option value="Quarterly">Quarterly (тактический)</option>
@@ -171,7 +179,7 @@
                         </div>
                     </div>
 
-                    <!-- Кнопки управления -->
+                    <!-- Кнопки -->
                     <div class="flex flex-wrap gap-3 mt-6">
                         <button id="add-btn" class="btn-terminator px-6 py-2 rounded-md font-bold">+ Добавить</button>
                         <button id="update-btn" class="btn-terminator px-6 py-2 rounded-md font-bold">⟲ Обновить</button>
@@ -193,9 +201,7 @@
                                     <th class="px-4 py-2">Абонемент</th>
                                 </tr>
                             </thead>
-                            <tbody id="table-body">
-                                <!-- строки добавляются скриптом -->
-                            </tbody>
+                            <tbody id="table-body"></tbody>
                         </table>
                     </div>
                 </div>
@@ -210,9 +216,7 @@
     </div>
 
     <script>
-        // Массив с членами клуба
         let members = [];
-
         const idInput = document.getElementById('member-id');
         const nameInput = document.getElementById('member-name');
         const ageInput = document.getElementById('member-age');
@@ -258,7 +262,6 @@
             const name = nameInput.value.trim();
             const age = parseInt(ageInput.value.trim());
             const membership = membershipSelect.value;
-
             if (!id || !name || !age || isNaN(id) || isNaN(age)) {
                 alert('Заполните все поля, юнит!');
                 return;
@@ -278,7 +281,6 @@
             const name = nameInput.value.trim();
             const age = parseInt(ageInput.value.trim());
             const membership = membershipSelect.value;
-
             if (!id || !name || !age || isNaN(id) || isNaN(age)) {
                 alert('Заполните поля корректно!');
                 return;
